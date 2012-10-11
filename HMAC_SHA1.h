@@ -14,13 +14,13 @@ typedef unsigned char BYTE ;
 class CHMAC_SHA1 : public CSHA1
 {
     private:
-
-		char * szReport ;
-		char * AppendBuf1 ;
-		char * AppendBuf2 ;
-		char * SHA1_Key ;
 		BYTE m_ipad[64];
         BYTE m_opad[64];
+
+		char * szReport ;
+		char * SHA1_Key ;
+		char * AppendBuf1 ;
+		char * AppendBuf2 ;
 
 
 	public:
@@ -33,9 +33,9 @@ class CHMAC_SHA1 : public CSHA1
 
 		CHMAC_SHA1()
 			:szReport(new char[HMAC_BUF_LEN]),
+             SHA1_Key(new char[HMAC_BUF_LEN]),
              AppendBuf1(new char[HMAC_BUF_LEN]),
-             AppendBuf2(new char[HMAC_BUF_LEN]),
-             SHA1_Key(new char[HMAC_BUF_LEN])
+             AppendBuf2(new char[HMAC_BUF_LEN])
 		{}
 
         ~CHMAC_SHA1()
@@ -51,4 +51,3 @@ class CHMAC_SHA1 : public CSHA1
 
 
 #endif /* __HMAC_SHA1_H__ */
-

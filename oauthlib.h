@@ -3,6 +3,7 @@
 
 #include "time.h"
 #include <cstdlib>
+#include <sstream>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -25,6 +26,14 @@ namespace oAuthLibDefaults
     const std::string OAUTHLIB_TOKENSECRET_KEY = "oauth_token_secret";
     const std::string OAUTHLIB_VERIFIER_KEY = "oauth_verifier";
     const std::string OAUTHLIB_SCREENNAME_KEY = "screen_name";
+    const std::string OAUTHLIB_AUTHENTICITY_TOKEN_KEY = "authenticity_token";
+    const std::string OAUTHLIB_SESSIONUSERNAME_KEY = "session[username_or_email]";
+    const std::string OAUTHLIB_SESSIONPASSWORD_KEY = "session[password]";
+    const std::string OAUTHLIB_AUTHENTICITY_TOKEN_TWITTER_RESP_KEY = "authenticity_token\" type=\"hidden\" value=\"";
+    const std::string OAUTHLIB_TOKEN_TWITTER_RESP_KEY = "oauth_token\" type=\"hidden\" value=\"";
+    const std::string OAUTHLIB_PIN_TWITTER_RESP_KEY = "code-desc\"><code>";
+    const std::string OAUTHLIB_TOKEN_END_TAG_TWITTER_RESP = "\" />";
+    const std::string OAUTHLIB_PIN_END_TAG_TWITTER_RESP = "</code>";
 
     const std::string OAUTHLIB_AUTHHEADER_STRING = "Authorization: OAuth ";
 };
@@ -32,9 +41,9 @@ namespace oAuthLibDefaults
 namespace oAuthTwitterApiUrls
 {
     /* Twitter OAuth API URLs */
-    const std::string OAUTHLIB_TWITTER_REQUEST_TOKEN_URL = "http://twitter.com/oauth/request_token";
-    const std::string OAUTHLIB_TWITTER_AUTHORIZE_URL = "http://twitter.com/oauth/authorize?oauth_token=";
-    const std::string OAUTHLIB_TWITTER_ACCESS_TOKEN_URL = "http://twitter.com/oauth/access_token";
+    const std::string OAUTHLIB_TWITTER_REQUEST_TOKEN_URL = "twitter.com/oauth/request_token";
+    const std::string OAUTHLIB_TWITTER_AUTHORIZE_URL = "twitter.com/oauth/authorize?oauth_token=";
+    const std::string OAUTHLIB_TWITTER_ACCESS_TOKEN_URL = "twitter.com/oauth/access_token";
 };
 
 typedef enum _eOAuthHttpRequestType
@@ -81,6 +90,8 @@ public:
 
     bool extractOAuthTokenKeySecret( const std::string& requestTokenResponse /* in */ );
 
+    oAuth clone();
+
 private:
 
     /* OAuth data */
@@ -94,10 +105,14 @@ private:
     std::string m_oAuthScreenName;
 
     /* OAuth twitter related utility methods */
+    void buildOAuthRawDataKeyValPairs( const std::string& rawData, /* in */
+                                       bool urlencodeData, /* in */
+                                       oAuthKeyValuePairs& rawDataKeyValuePairs /* out */ );
+
     bool buildOAuthTokenKeyValuePairs( const bool includeOAuthVerifierPin, /* in */
-                                       const std::string& rawData, /* in */
                                        const std::string& oauthSignature, /* in */
-                                       oAuthKeyValuePairs& keyValueMap /* out */ );
+                                       oAuthKeyValuePairs& keyValueMap /* out */,
+                                       const bool generateTimestamp /* in */ );
 
     bool getStringFromOAuthKeyValuePairs( const oAuthKeyValuePairs& rawParamMap, /* in */
                                           std::string& rawParams, /* out */
@@ -112,4 +127,3 @@ private:
 };
 
 #endif // __OAUTHLIB_H__
-
