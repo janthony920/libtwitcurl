@@ -1815,6 +1815,8 @@ bool twitCurl::performDelete( const std::string& deleteUrl )
 *--*/
 bool twitCurl::performPost( const std::string& postUrl, std::string dataStr )
 {
+    bool result = false;
+    m_respcode = 600;
     /* Return if cURL is not initialized */
     if( !isCurlInit() )
     {
@@ -1839,6 +1841,7 @@ bool twitCurl::performPost( const std::string& postUrl, std::string dataStr )
     }
 
     /* Set http request, url and data */
+    //curl_easy_setopt( m_curlHandle, CURLOPT_VERBOSE, 1);
     curl_easy_setopt( m_curlHandle, CURLOPT_POST, 1 );
     curl_easy_setopt( m_curlHandle, CURLOPT_URL, postUrl.c_str() );
     if( dataStr.length() )
@@ -1849,17 +1852,17 @@ bool twitCurl::performPost( const std::string& postUrl, std::string dataStr )
     /* Send http request */
     if( CURLE_OK == curl_easy_perform( m_curlHandle ) )
     {
-        if( pOAuthHeaderList )
-        {
-            curl_slist_free_all( pOAuthHeaderList );
-        }
-        return true;
+
+       if( CURLE_OK == curl_easy_getinfo (m_curlHandle, CURLINFO_RESPONSE_CODE, &m_respcode))
+          result = true;
+       else 
+          result = false;
     }
     if( pOAuthHeaderList )
     {
         curl_slist_free_all( pOAuthHeaderList );
     }
-    return false;
+    return result;
 }
 
 /*++

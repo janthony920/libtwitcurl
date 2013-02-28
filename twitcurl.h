@@ -219,6 +219,7 @@ public:
     bool isCurlInit();
     void getLastWebResponse( std::string& outWebResp /* out */ );
     void getLastCurlError( std::string& outErrResp /* out */);
+    int getRespCode( /* out */) { return static_cast<int>(m_respcode); };
 
     /* Internal cURL related methods */
     int saveLastWebResponse( char*& data, size_t size );
@@ -241,6 +242,7 @@ private:
     CURL* m_curlHandle;
     char m_errorBuffer[twitCurlDefaults::TWITCURL_DEFAULT_BUFFSIZE];
     std::string m_callbackData;
+    long m_respcode;
 
     /* cURL flags */
     bool m_curlProxyParamsSet;
