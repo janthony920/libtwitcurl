@@ -67,7 +67,8 @@ namespace twitterDefaults
     const std::string TWITCURL_SEARCH_URL = "search.twitter.com/search";
 
     /* Status URLs */
-    const std::string TWITCURL_STATUSUPDATE_URL = "api.twitter.com/1/statuses/update";
+    //const std::string TWITCURL_STATUSUPDATE_URL = "api.twitter.com/1/statuses/update";
+    const std::string TWITCURL_STATUSUPDATE_URL = "api.twitter.com/1.1/statuses/update";
     const std::string TWITCURL_STATUSSHOW_URL = "api.twitter.com/1/statuses/show/";
     const std::string TWITCURL_STATUDESTROY_URL = "api.twitter.com/1/statuses/destroy/";
     const std::string TWITCURL_RETWEET_URL = "api.twitter.com/1/statuses/retweet/";

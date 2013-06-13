@@ -18,8 +18,10 @@ m_curlHandle( NULL ),
 m_curlProxyParamsSet( false ),
 m_curlLoginParamsSet( false ),
 m_curlCallbackParamsSet( false ),
-m_eApiFormatType( twitCurlTypes::eTwitCurlApiFormatXml ),
+m_eApiFormatType( twitCurlTypes::eTwitCurlApiFormatJson ),
 m_eProtocolType( twitCurlTypes::eTwitCurlProtocolHttp )
+//m_eApiFormatType( twitCurlTypes::eTwitCurlApiFormatXml ),
+//m_eProtocolType( twitCurlTypes::eTwitCurlProtocolHttp )
 {
     /* Clear callback buffers */
     clearCurlCallbackBuffers();
